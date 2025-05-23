@@ -15,7 +15,7 @@ def gallery_view(request):
 
 
 def image_detail(request, pk):
-    image = get_object_or_404(Image, pk=id)
+    image = get_object_or_404(Image, pk=pk)
 
     return render(request, 'image_detail.html', {
         'image': image})
