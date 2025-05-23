@@ -11,5 +11,11 @@ def gallery_view(request):
     )
 
     return render(request, 'gallery.html', {
-        'title': 'List of Images for the past month',
         'images': images})
+
+
+def image_detail(request, id):
+    image = Image.objects.get(pk=id)
+
+    return render(request, 'image_detail.html', {
+        'image': image})
