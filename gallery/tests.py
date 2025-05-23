@@ -23,4 +23,9 @@ class GalleryViewTests(TestCase):
         response = self.client.get(reverse('main'))
         self.assertEqual(response.status_code, 200)
 
+    def test_gallery_view_context(self):
+        response = self.client.get(reverse('main'))
+        self.assertIn(self.new_image, response.context['images'])
+        self.assertNotIn(self.old_image, response.context['images'])
+
 
