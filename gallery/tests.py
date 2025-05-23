@@ -41,3 +41,7 @@ class ImageDetailViewTests(TestCase):
     def test_image_detail_view_status_code(self):
         response = self.client.get(reverse('image_detail', args=[self.image.id]))
         self.assertEqual(response.status_code, 200)
+
+    def test_image_detail_view_context(self):
+        response = self.client.get(reverse('image_detail', args=[self.image.id]))
+        self.assertEqual(response.context['image'], self.image)
