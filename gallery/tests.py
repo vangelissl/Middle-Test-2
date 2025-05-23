@@ -10,7 +10,8 @@ class GalleryViewTests(TestCase):
         self.category = Category.objects.create(name='technology')
         self.old_image = Image.objects.create(title='First computer',
                                               image='https://www.google.com/imgres?q=computer&imgurl=https%3A%2F%2Fcdn.britannica.com%2F77%2F170477-050-1C747EE3%2FLaptop-computer.jpg&imgrefurl=https%3A%2F%2Fwww.britannica.com%2Ftechnology%2Fcomputer&docid=9oCv57c03X8yLM&tbnid=_bAxRLesPf9HpM&vet=12ahUKEwjS0b6UrLmNAxXmBdsEHSYVHY0QM3oECGYQAA..i&w=1600&h=1097&hcb=2&ved=2ahUKEwjS0b6UrLmNAxXmBdsEHSYVHY0QM3oECGYQAA',
-                                              created_date=datetime.now() - timedelta(days=365),
+                                              created_date=datetime.now() - timedelta(
+                                                  days=365),
                                               age_limit=100)
         self.old_image.categories.set([self.category])
         self.new_image = Image.objects.create(title='Second computer',
@@ -29,3 +30,14 @@ class GalleryViewTests(TestCase):
         self.assertNotIn(self.old_image, response.context['images'])
 
 
+class ImageDetailViewTests(TestCase):
+    def setUp(self):
+        self.image = Image.objects.create(title='First computer',
+                                              image='https://www.google.com/imgres?q=computer&imgurl=https%3A%2F%2Fcdn.britannica.com%2F77%2F170477-050-1C747EE3%2FLaptop-computer.jpg&imgrefurl=https%3A%2F%2Fwww.britannica.com%2Ftechnology%2Fcomputer&docid=9oCv57c03X8yLM&tbnid=_bAxRLesPf9HpM&vet=12ahUKEwjS0b6UrLmNAxXmBdsEHSYVHY0QM3oECGYQAA..i&w=1600&h=1097&hcb=2&ved=2ahUKEwjS0b6UrLmNAxXmBdsEHSYVHY0QM3oECGYQAA',
+                                              created_date=datetime.now() - timedelta(
+                                                  days=365),
+                                              age_limit=100)
+
+    def test_image_detail_view_status_code(self):
+        response = self.client.get(reverse('image_detail', args=[self.image.id]))
+        self.assertEqual(response.status_code, 200)
